@@ -2,7 +2,7 @@ package myapi;
 
 public class Greeting {
 
-    private final long id;
+    private long id;
     private final String content;
 
     public Greeting(long id, String content) {
@@ -12,6 +12,10 @@ public class Greeting {
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getContent() {
