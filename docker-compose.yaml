@@ -3,12 +3,6 @@ services:
   app:
     build: myapp/.
     image: "${REGISTRY}myapp:${TAG-latest}"
-    ports:
-    - "8080:8080"
-#    environment: 
-#      API_BASE_URL : "http://api:8080/"
   api:
     build: myapi/.
     image: "${REGISTRY}myapi:${TAG-latest}"
-#    ports:
-#    - "8081:8080"
