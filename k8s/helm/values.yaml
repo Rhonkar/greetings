@@ -1,0 +1,14 @@
+# Default values for greetings.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This can never work, must be overriden while deploying
+registry: azurezr.io
+
+myapp:
+  replicaCount: 3
+  versionTag: v1.0
+
+myapi:
+  replicaCount: 1
+  versionTag: v1.0
