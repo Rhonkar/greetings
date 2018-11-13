@@ -5,6 +5,8 @@ services:
     image: "${REGISTRY}myapp:${TAG-latest}"
     ports: 
       - "8080:8080"
+    environment: 
+      API_BASE_URL: "http://api:8080"
   api:
     build: myapi/.
     image: "${REGISTRY}myapi:${TAG-latest}"
@@ -13,7 +15,7 @@ services:
       SPRING_DATASOURCE_DRIVERCLASSNAME: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
       SPRING_DATASOURCE_USERNAME: "sa"
       SPRING_DATASOURCE_PASSWORD: "123Yeah!"
-      SPRING_JPA_DATABASE-PLATFORM: "org.hibernate.dialect.SQLServer2012Dialect"
+      SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.SQLServer2012Dialect"
   db:
     image: "microsoft/mssql-server-linux:2017-CU12"
     environment: 
