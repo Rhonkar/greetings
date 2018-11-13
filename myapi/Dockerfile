@@ -1,10 +1,18 @@
 # == Stage 1: Build and package the application
 FROM maven:3.3-jdk-8 AS builder
 WORKDIR /usr/src/work
-# First copy only the pom and load dependencies. This will be cached by docker as a reusable layer.
+
+# Workaround for sql server jdbc driver not in maven. See https://coderanch.com/t/630637/build-tools/Maven-dependency-sql-jdbc-driver. Fortunately this layer will be cached.
+COPY mssqljdbc mssqljdbc
+RUN mvn install:install-file -Dfile=mssqljdbc/sqljdbc42.jar \
+    -DgroupId=com.microsoft.sqlserver \
+    -DartifactId=sqljdbc4 \
+    -Dversion=6.0 -Dmaven.repo.local=/usr/src/repo \
+    -Dpackaging=jar
+# Now copy POM and load dependencies. This will be cached by docker as another reusable layer.
 COPY pom.xml .
 RUN mvn dependency:go-offline -Dmaven.repo.local=/usr/src/repo
-# Now copy the rest and call the package goal.
+# Finally, copy the rest and call the package goal.
 COPY . .
 RUN mvn package -Dmaven.repo.local=/usr/src/repo
 

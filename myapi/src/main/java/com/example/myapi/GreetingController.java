@@ -1,5 +1,8 @@
 package myapi;
 
+import java.util.Optional;
+import java.util.ArrayList;
+import java.lang.Iterable;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -8,32 +11,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestMethod;
-import java.util.ArrayList;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 public class GreetingController {
 
-    private static final ArrayList<Greeting> stupidGreetingList = new ArrayList<Greeting>();
+    @Autowired
+	private GreetingRepository greetingRepository;
 
     @RequestMapping("/greetings")
-    public Greeting[] greeting(@RequestParam(value="name", defaultValue="World") String name) {
-        return stupidGreetingList.toArray(new Greeting[stupidGreetingList.size()]);
+    public Iterable<Greeting> greetings() {
+        return greetingRepository.findAll();
     }
 
     @RequestMapping("/greetings/{id}")
-    public Greeting greetingById(@PathVariable("id") Integer id) {
-        return stupidGreetingList
-            .stream()
-            .filter(g -> g.getId() == id)
-            .findFirst()
-            .orElse(null);
+    public Optional<Greeting> greetingById(@PathVariable("id") Long id) {
+        return greetingRepository.findById(id);
     }
 
     @RequestMapping(value = "/greetings", method = RequestMethod.POST)
     @ResponseBody
     public Greeting greetingPost(@RequestBody  Greeting greeting) {
-        greeting.setId(stupidGreetingList.size() + 1);
-        stupidGreetingList.add(greeting);
+        greetingRepository.save(greeting);
         return greeting;
     }
 
