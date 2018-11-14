@@ -7,15 +7,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import com.microsoft.applicationinsights.TelemetryClient;
 
 @Controller
 public class GreetingController {
+
+    @Autowired
+    TelemetryClient telemetryClient;
 
     @GetMapping("/greeting")
     public String greetingForm(@RequestParam(value="content", defaultValue="Default content") String content, Model model) {
         Greeting greeting = new Greeting();
         greeting.setContent(content);
         model.addAttribute("greeting", greeting);
+        telemetryClient.trackTrace("Greeting Form page view.");
         return "greeting";
     }
 
@@ -26,6 +31,7 @@ public class GreetingController {
         restTemplate.postForObject(url, greeting, Greeting.class);
         Greeting[] greetings = restTemplate.getForObject(url, Greeting[].class);
         model.addAttribute("greetings", greetings);
+        telemetryClient.trackTrace("Greeting Form submit.");
         return "result";
     }
 
