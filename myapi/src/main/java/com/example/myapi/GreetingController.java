@@ -44,7 +44,7 @@ public class GreetingController {
         return greeting;
     }
 
-    private private static int size(Iterable<?> iterable) {
+    private static int size(Iterable<?> iterable) {
         if (iterable == null) {
             return 0;
         }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 import com.microsoft.applicationinsights.TelemetryClient;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Controller
 public class GreetingController {
