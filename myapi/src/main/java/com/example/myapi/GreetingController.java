@@ -23,6 +23,12 @@ public class GreetingController {
     @Autowired
     TelemetryClient telemetryClient;
 
+    @RequestMapping("/")
+    public string health() {
+        telemetryClient.trackTrace("Entering / GET (for health probe).");
+        return "healthy";
+    }
+
     @RequestMapping("/greetings")
     public Iterable<Greeting> greetings() {
         telemetryClient.trackTrace("Entering /greetings GET.");
