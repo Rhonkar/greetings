@@ -24,7 +24,7 @@ public class GreetingController {
     TelemetryClient telemetryClient;
 
     @RequestMapping("/")
-    public string health() {
+    public String health() {
         telemetryClient.trackTrace("Entering / GET (for health probe).");
         return "healthy";
     }
