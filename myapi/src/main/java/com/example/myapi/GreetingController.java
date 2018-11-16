@@ -29,7 +29,7 @@ public class GreetingController {
         return "healthy";
     }
 
-    @RequestMapping("/greetings")
+    @RequestMapping("/api/greetings")
     public Iterable<Greeting> greetings() {
         telemetryClient.trackTrace("Entering /greetings GET.");
         Iterable<Greeting> allGreetings = greetingRepository.findAll();
@@ -37,13 +37,13 @@ public class GreetingController {
         return allGreetings;
     }
 
-    @RequestMapping("/greetings/{id}")
+    @RequestMapping("/api/greetings/{id}")
     public Optional<Greeting> greetingById(@PathVariable("id") Long id) {
         telemetryClient.trackTrace("Entering /greetings/{id} GET.");
         return greetingRepository.findById(id);
     }
 
-    @RequestMapping(value = "/greetings", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/greetings", method = RequestMethod.POST)
     @ResponseBody
     public Greeting greetingPost(@RequestBody  Greeting greeting) {
         telemetryClient.trackTrace("Entering /greetings POST.");

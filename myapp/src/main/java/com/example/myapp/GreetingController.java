@@ -28,7 +28,7 @@ public class GreetingController {
     @PostMapping("/greeting")
     public String greetingSubmit(@ModelAttribute Greeting greeting, Model model) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = getApiBaseUrl() + "/greetings";
+        String url = getApiBaseUrl() + "/api/greetings";
         restTemplate.postForObject(url, greeting, Greeting.class);
         Greeting[] greetings = restTemplate.getForObject(url, Greeting[].class);
         model.addAttribute("greetings", greetings);
