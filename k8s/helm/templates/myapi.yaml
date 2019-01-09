@@ -32,3 +32,18 @@ spec:
         image: {{.Values.registry}}/myapi:{{.Values.myapi.versionTag}}
         ports:
         - containerPort: 8080
+{{ if .Values.myapi.dbUrl }}
+        env:
+        - name: SPRING_DATASOURCE_URL: {{.Values.myapi.dbUrl}}
+        - name: SPRING_DATASOURCE_DRIVERCLASSNAME: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+        - name: SPRING_DATASOURCE_USERNAME: {{.Values.myapi.dbUsername }}
+        - name: SPRING_DATASOURCE_PASSWORD: {{.Values.myapi.dbPassword }}
+        - name: SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.SQLServer2012Dialect"
+{{ else }}
+        env:
+        - name: SPRING_DATASOURCE_URL: "jdbc:sqlserver://db:1433"
+        - name: SPRING_DATASOURCE_DRIVERCLASSNAME: "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+        - name: SPRING_DATASOURCE_USERNAME: "sa"
+        - name: SPRING_DATASOURCE_PASSWORD: "123Yeah!"
+        - name: SPRING_JPA_DATABASE_PLATFORM: "org.hibernate.dialect.SQLServer2012Dialect"
+{{ end }}

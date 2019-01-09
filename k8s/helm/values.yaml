@@ -10,5 +10,8 @@ myapp:
   versionTag: v1.0
 
 myapi:
-  replicaCount: 1
+  replicaCount: 3
   versionTag: v1.0
+  dbUrl:
+  dbUsername:
+  dbPassword:
